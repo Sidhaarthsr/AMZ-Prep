@@ -19,8 +19,18 @@ public class Threads {
         extension.start();
 
         // Executing Method : RunnableImplementation
-        Thread runnableThread = new Thread(new RunnableImplementation());
+        final RunnableImplementation runnableImplementation = new RunnableImplementation();
+        Thread runnableThread = new Thread(runnableImplementation);
         runnableThread.start();
+        try {
+            Thread.sleep(10000);
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Requesting stop...");
+        runnableImplementation.requestStop();
+        System.out.println("Stop Requested");
+        
 
         // Executing Method : AnonymousRunnableImplementation
         final Runnable anonymousRunnable = new Runnable() {
@@ -28,7 +38,7 @@ public class Threads {
             public void run() {
                 final String threadName = Thread.currentThread().getName();
                 System.out.println(threadName + " Running");
-                System.out.println("Executing AnonymousRunnableImplementation");
+                System.out.println("Executing AnonymousRunnableImplementation...");
                 System.out.println("Finished AnonymousRunnableImplementation");
             }
         };
@@ -39,9 +49,9 @@ public class Threads {
         final Runnable lambdaRunnable = () -> {
             final String threadName = Thread.currentThread().getName();
             System.out.println(threadName + " Running");
-            System.out.println("Executing LambdaRunnable");
+            System.out.println("Executing LambdaRunnable...");
             try {
-                System.out.println(threadName + " sleeping");
+                System.out.println(threadName + " sleeping...");
                 Thread.sleep(10000);
             } catch (final InterruptedException e) {
                 e.printStackTrace();
@@ -58,18 +68,36 @@ class ThreadExtension extends Thread {
     @Override
     public void run() {
         final String threadName = Thread.currentThread().getName();
-        System.out.println(threadName + " Running");
-        System.out.println("Executing ThreadExtension");
+        System.out.println(threadName + " Running...");
+        System.out.println("Executing ThreadExtension...");
         System.out.println("Finished ThreadExtension");
     }
 }
 
 class RunnableImplementation implements Runnable {
+
+    private boolean stopRequested = false;
+
+    public synchronized void requestStop() {
+        stopRequested = true;
+    }
+
+    public synchronized boolean isStopRequested() {
+        return stopRequested;
+    }
+
     @Override
     public void run() {
         final String threadName = Thread.currentThread().getName();
-        System.out.println(threadName + " Running");
-        System.out.println("Executing RunnableImplementation");
+        System.out.println(threadName + " Running...");
+        while (!isStopRequested()) {
+            try {
+                Thread.sleep(2000);
+            } catch (final InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("...");
+        }
         System.out.println("Finished RunnableImplementation");
     }
 
