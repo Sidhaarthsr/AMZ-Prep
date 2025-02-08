@@ -43,7 +43,6 @@ public class Threads {
             try {
                 System.out.println(threadName + " sleeping");
                 Thread.sleep(10000);
-                Thread.s
             } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
