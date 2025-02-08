@@ -26,6 +26,8 @@ public class Threads {
         final Runnable anonymousRunnable = new Runnable() {
             @Override
             public void run() {
+                final String threadName = Thread.currentThread().getName();
+                System.out.println(threadName + " Running");
                 System.out.println("Executing AnonymousRunnableImplementation");
                 System.out.println("Finished AnonymousRunnableImplementation");
             }
@@ -35,7 +37,16 @@ public class Threads {
 
         // Executing Method : LambdaRunnable
         final Runnable lambdaRunnable = () -> {
+            final String threadName = Thread.currentThread().getName();
+            System.out.println(threadName + " Running");
             System.out.println("Executing LambdaRunnable");
+            try {
+                System.out.println(threadName + " sleeping");
+                Thread.sleep(10000);
+                Thread.s
+            } catch (final InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("Finished LambdaRunnable");
         };
 
@@ -47,15 +58,18 @@ public class Threads {
 class ThreadExtension extends Thread {
     @Override
     public void run() {
+        final String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + " Running");
         System.out.println("Executing ThreadExtension");
         System.out.println("Finished ThreadExtension");
     }
 }
 
 class RunnableImplementation implements Runnable {
-
     @Override
     public void run() {
+        final String threadName = Thread.currentThread().getName();
+        System.out.println(threadName + " Running");
         System.out.println("Executing RunnableImplementation");
         System.out.println("Finished RunnableImplementation");
     }
