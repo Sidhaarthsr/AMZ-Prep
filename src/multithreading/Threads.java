@@ -52,6 +52,12 @@ public class Threads {
         anonymousRunnableThread.setDaemon(true);
         anonymousRunnableThread.start();
 
+        try {
+            anonymousRunnableThread.join();
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Executing Method : LambdaRunnable
         final Runnable lambdaRunnable = () -> {
             final String threadName = Thread.currentThread().getName();
