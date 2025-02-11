@@ -39,10 +39,17 @@ public class Threads {
                 final String threadName = Thread.currentThread().getName();
                 System.out.println(threadName + " Running");
                 System.out.println("Executing AnonymousRunnableImplementation...");
+                try {
+                    System.out.println(threadName + " sleeping...");
+                    Thread.sleep(20000);
+                } catch (final InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Finished AnonymousRunnableImplementation");
             }
         };
         final Thread anonymousRunnableThread = new Thread(anonymousRunnable);
+        anonymousRunnableThread.setDaemon(true);
         anonymousRunnableThread.start();
 
         // Executing Method : LambdaRunnable
@@ -52,7 +59,7 @@ public class Threads {
             System.out.println("Executing LambdaRunnable...");
             try {
                 System.out.println(threadName + " sleeping...");
-                Thread.sleep(10000);
+                Thread.sleep(2000);
             } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
