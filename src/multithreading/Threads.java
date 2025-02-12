@@ -79,6 +79,12 @@ public class Threads {
          * Project LOOM - Fibers i.e, User Space Level Threads
          * TODO : Try it out using the early access build : https://jdk.java.net/loom/
          */
+
+         /**
+          * 
+          * TODO : Implement Java Virtual Threads as well (From JDK 19)
+          * Also try to examine the difference between platform threads and virtual threads
+          */
         
     }
 }
